@@ -34,15 +34,17 @@ class Player2(GameSprite):
             self.rect.y -= self.speed
         if keys_pressed[K_l] and self.rect.y < 395:
             self.rect.y += self.speed
-class Ball(GameSprite):
-    def update(self):         
+# class Ball(GameSprite):
+#     def update(self):         
   
        
 
 player = Player('65.PNG', 10,200,40,100,10)
 player2 = Player2('65.PNG', 650,200,40,100,10)
-
-
+font.init()
+font1 = font.Font(None,56)
+score1 = 0
+score2 = 0
 finish = False
 game = True
 while game:
@@ -58,5 +60,10 @@ while game:
         player.reset()
         player2.update()
         player2.reset()
+
+        text = font1.render(str(score1),1,(45,140,200))
+        window.blit(text,(10,15))
+        text2 = font1.render(str(score2),1,(200,200,200))
+        window.blit(text2,(670,15))
     display.update()
     clock.tick(FPS)
