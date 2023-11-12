@@ -1,4 +1,5 @@
 from pygame import *
+from random import random, randint
 wins = 700
 winh =500
 FPS = 120
@@ -34,9 +35,10 @@ class Player2(GameSprite):
             self.rect.y -= self.speed
         if keys_pressed[K_l] and self.rect.y < 395:
             self.rect.y += self.speed
-
-sp_x = 3
-sp_y = 3       
+background1 = transform.scale(image.load('2.jpg'), (700,500))
+background1 = transform.scale(image.load('21.jpg'), (700,500))
+sp_x = 4
+sp_y = 4       
 ball = GameSprite('64.png', 325,45,50,50,0)
 player = Player('65.PNG', 10,200,40,100,10)
 player2 = Player2('65.PNG', 650,200,40,100,10)
@@ -66,16 +68,32 @@ while game:
         ball.reset()
         if sprite.collide_rect(player,ball):
             sp_x *= -1
+        
         if sprite.collide_rect(player2,ball):
-            sp_x *= -1    
+            sp_x *= -1
+              
+        
         if ball.rect.y  >= 450:
             sp_y *= -1
+            
         if ball.rect.y  <= 0:
+            
             sp_y *= -1
-        if ball.rect.x > -10:
+            
+        if ball.rect.x < -10:
             score2 += 1
-            ball.rect.x = 
-
+            ball.rect.x = 325
+            ball.rect.y = randint(65,440)
+        if ball.rect.x > 695:
+            score1 += 1
+            ball.rect.x = 325
+            ball.rect.y = randint(65,440)
+        if score1 > 2:
+            window.blit(background1,(0, 0))
+            finish = True
+        if score2 > 2:
+            window.blit(background2,(0, 0))
+            finish = True
         text = font1.render(str(score1),1,(45,140,200))
         window.blit(text,(10,15))
         text2 = font1.render(str(score2),1,(200,200,200))
