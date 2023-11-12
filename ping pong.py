@@ -1,7 +1,7 @@
 from pygame import *
 wins = 700
 winh =500
-FPS = 60
+FPS = 120
 
 window = display.set_mode((wins,winh))
 display.set_caption('PING_PONG')
@@ -34,11 +34,10 @@ class Player2(GameSprite):
             self.rect.y -= self.speed
         if keys_pressed[K_l] and self.rect.y < 395:
             self.rect.y += self.speed
-# class Ball(GameSprite):
-#     def update(self):         
-  
-       
 
+sp_x = 3
+sp_y = 3       
+ball = GameSprite('64.png', 325,45,50,50,0)
 player = Player('65.PNG', 10,200,40,100,10)
 player2 = Player2('65.PNG', 650,200,40,100,10)
 font.init()
@@ -55,11 +54,27 @@ while game:
             if e.key == K_SPACE:
                 player.fire()
     if finish != True:
+        
+        
         window.blit(background,(0, 0))
         player.update()
         player.reset()
         player2.update()
         player2.reset()
+        ball.rect.x += sp_x
+        ball.rect.y += sp_y
+        ball.reset()
+        if sprite.collide_rect(player,ball):
+            sp_x *= -1
+        if sprite.collide_rect(player2,ball):
+            sp_x *= -1    
+        if ball.rect.y  >= 450:
+            sp_y *= -1
+        if ball.rect.y  <= 0:
+            sp_y *= -1
+        if ball.rect.x > -10:
+            score2 += 1
+            ball.rect.x = 
 
         text = font1.render(str(score1),1,(45,140,200))
         window.blit(text,(10,15))
